@@ -6,11 +6,16 @@ use Illuminate\Support\Facades\Response;
 use App\Services\UserService;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\PageController;
 use App\Services\ProductService;
 
 Route::get('/', function () {
     return view('welcome', ['name' => 'menor-app']);
 });
+
+Route::get('/users', [UserController::class, 'index']);
+
+Route::resource('products', ProductController::class);
 
 //Service Container
 Route::get('/test-container', function (Request $request) {
@@ -56,7 +61,7 @@ Route::get('/test/route/sample', function () {
 // Route -> Middleware Group
 Route::middleware(['user-middleware'])->group(function () {
     Route::get('route-middleware-group/first', function (Request $request) {
-        echo 'first';
+        return 'first1';
     });
 
     Route::get('route-middleware-group/second', function (Request $request) {
@@ -83,14 +88,16 @@ Route::post('/token', function(Request $request) {
 
 
 // Controller -> Middleware
-Route::get('/users', [UserController::class, 'index'])->middleware('user-middleware');
+// Route::get('/users', [UserController::class, 'index'])->middleware('user-middleware');
 
 // Resource
-Route::resource('products', ProductController::class);
+// Route::resource('products', ProductController::class);
 
 //View with data
 Route::get('/product-list', function (ProductService $productService) {
     $data['products'] = $productService->listProducts();
     return view('products.list', $data);
 });
+
+
 

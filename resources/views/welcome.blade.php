@@ -1,5 +1,5 @@
-<html>
-    <body>
-        <h1>Welcome to {{ $name }}</h1>
-    </body>
-</html>
+<x-layout>
+    <x-slot:heading>
+         <h1>Welcome to {{ $name }}</h1>
+    </x-slot>   
+</x-layout>
